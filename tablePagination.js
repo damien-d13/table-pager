@@ -1,119 +1,108 @@
-const paginationNavigation = document.getElementById('pagination-navigation');
 
-var numberOfTableRow = document.querySelectorAll('.pagination-row');
+function paginateTable(tableId, navId, rowCountPerPageArray) {
 
+    // element that contains the selectList and page buttons
+    let navigation = document.getElementById(navId);
+    // console.log(navigation);
+    
+    // table node to page
+    let table = document.getElementById(tableId);
+    let tableBody = table.getElementsByTagName('tbody')[0];
+    // console.log(table);
 
-/* ----------   Create Element ---------------------------------- */
-// Check Box Nb per Page
-var nbPerPage = [2, 5, 10, 15, 20, 25, 30];
+    // row elements in the table
+    let rows = tableBody.getElementsByTagName('tr');
+    // console.log(rows);
 
-var checkboxNbPerPage = document.createElement("select");
-checkboxNbPerPage.className = "mx-2";
+    // current page
+    let page = 1;
 
-for (let i = 0; i < nbPerPage.length; i++) {
-    let option = document.createElement("option");
-    option.innerHTML = nbPerPage[i];
-    option.value = nbPerPage[i];
-    checkboxNbPerPage.appendChild(option);
-}
+    // list of different row count per page
+    let selectList = document.createElement("select");
+    selectList.className = "mx-2";
+    rowCountPerPageArray.forEach((index, count) => {
+        let option = document.createElement("option");
+        option.innerHTML = [index];
+        option.value = count;
+        selectList.appendChild(option);
+    });
+    navigation.appendChild(selectList);
+    // console.log(selectList);
 
-paginationNavigation.appendChild(checkboxNbPerPage);
-var nbPageSelect = document.querySelector('select');
-var nbPage = nbPageSelect.options[nbPageSelect.selectedIndex].value;
-
-// BUTTON left with SVG
-var btnLeft = document.createElement("button");
-btnLeft.className = "btn btn-outline-dark";
-btnLeft.innerHTML = "&lt;";
-btnLeft.value = "previous";
-
-paginationNavigation.appendChild(btnLeft);
-
-function createBtnPage() {
-
-
-// Button Number Page
-    for (let i = 0; i < Math.ceil(numberOfTableRow.length / nbPage); i++) {
-        let btnNbPage = document.createElement("button");
-        btnNbPage.className = "btn btn-outline-dark mx-1 button-page";
-        btnNbPage.innerHTML = (i + 1).toString();
-        btnNbPage.value = i + 1;
-        // console.log(btnNbPage.value);
-
-        paginationNavigation.appendChild(btnNbPage);
+    function getRowCountPerPage() {
+        return rowCountPerPageArray[selectList.selectedIndex];
     }
 
-//Button left with svg
+    let previousButton = document.createElement("button");
+    previousButton.className = "btn btn-outline-dark";
+    previousButton.innerHTML = "&lt;";
+    previousButton.value = "previous";
+    navigation.appendChild(previousButton);
+    // console.log(previousButton.value);
 
-    var btnright = document.createElement("button");
-    btnright.className = "btn btn-outline-dark btn-next";
-    btnright.innerHTML = "&gt;"
-    btnright.value = "next"
+    let pageButtons = [];
+    let nextButton = null;
 
-    paginationNavigation.appendChild(btnright);
-    numPageBtn = document.querySelectorAll('.button-page');
-    btnNext = document.querySelector('.btn-next');
-
-
-}
-
-createBtnPage();
-/*------------------------------ Event  ---------------------------*/
-
-var numPageBtn = document.querySelectorAll('.button-page');
-var btnNext = document.querySelector('.btn-next');
-var numPage = 1;
-
-// console.log(numPageBtn.length);
-// console.log(nbPage);
-
-//Click change visible row in page and number of page
-nbPageSelect.addEventListener("click", (e) => {
-    nbPage = nbPageSelect.options[nbPageSelect.selectedIndex].value
-    hidePerPage();
-
-
-    // Delete Buttoon
-    for (let i = 0; i < numPageBtn.length; i++) {
-        // paginationNavigation.removeChild(numPageBtn[i]);
-        numPageBtn[i].remove();
-        console.log(numPageBtn[i]);
+    function hideRows() {
+        var firstRow = (page - 1) * parseInt(getRowCountPerPage());
+        var lastRow = firstRow + parseInt(getRowCountPerPage());
+        // console.log(getRowCountPerPage())
+        // console.log(firstRow + " : " + lastRow);
+        for (i = 0; i < rows.length; i++) {
+            // console.log(i + " : " + (firstRow <= i && i < lastRow));
+            rows[i].hidden = !(firstRow <= i && i < lastRow);
+            // rows[i].style.color = (firstRow <= i && i < lastRow) ? "blue": "red";
+        }
     }
+    // console.log("function hideRows created");
 
-    btnNext.remove();
+    function createButtons() {
 
-    //  Create button
+        pageButtons = [];
+        for (let i = 0; i < Math.ceil(rows.length / getRowCountPerPage()); i++) {
+            let button = document.createElement("button");
+            button.className = "btn btn-outline-dark mx-1 button-page";
+            button.innerHTML = (i + 1).toString();
+            button.value = i + 1;
+            button.addEventListener("click", () => {
+                page = button.value;
+                hideRows();
+            })
+            navigation.appendChild(button);
+            pageButtons.push(button);
+        }
+        // console.log(pageButtons)
 
-    nbPage = nbPageSelect.options[nbPageSelect.selectedIndex].value;
-    createBtnPage();
-    console.log(numPageBtn);
-
-
-})
-
-function hidePerPage() {
-    //
-    // console.log("Num Page " + numPage);
-    // console.log("Nb Page " + nbPage);
-    var rowStart = (numPage - 1) * parseInt(nbPage);
-    var rowEnd = rowStart + parseInt(nbPage);
-
-    for (let i = 0; i < numberOfTableRow.length; i++) {
-
-        // console.log(i + " : " + numberOfTableRow[i]);
-        numberOfTableRow[i].hidden = !(rowStart <= i && i < rowEnd);
+        if (nextButton === null) {
+            nextButton = document.createElement("button");
+            nextButton.className = "btn btn-outline-dark btn-next";
+            nextButton.innerHTML = "&gt";
+            nextButton.value = "next";
+        }
+        navigation.appendChild(nextButton);
     }
-}
+    // console.log("function createButtons created");
 
+    function deleteButtons() {
+        pageButtons.forEach((button) => {button.remove()});
+        nextButton.remove();
+    }
+    // console.log("function deleteButtons created");
 
-for (let i = 0; i < numPageBtn.length; i++) {
+    createButtons();
 
-    numPageBtn[i].addEventListener("click", (e) => {
-        numPage = numPageBtn[i].value;
-        // console.log(numPageBtn[i].value);
-        hidePerPage()
-
+    selectList.addEventListener("click", () => {
+        page = 1;
+        hideRows();
+        deleteButtons();
+        createButtons();
     })
+
+    hideRows();
 }
 
-hidePerPage();
+paginateTable(
+    "myTable", 
+    "pagination-navigation", 
+    [2, 5, 10, 15, 20, 25, 30]
+);
