@@ -8,75 +8,161 @@
     <title>Document</title>
 </head>
 <body>
-<table id="myTable">
-    <thead>
-    <tr>
-        <th>Firstname</th>
-        <th>Lastname</th>
-        <th>Country</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr class="pagination-row">
-        <td>Alfreds</td>
-        <td>Futterkiste</td>
-        <td>Germany</td>
-    </tr>
-    <tr class="pagination-row">
-        <td>Maria</td>
-        <td>Anders</td>
-        <td>Mexico</td>
-    </tr>
-    <tr class="pagination-row">
-        <td>Talbert</td>
-        <td>Chaudron</td>
-        <td>Nigeria</td>
-    </tr>
-    <tr class="pagination-row">
-        <td>Bran</td>
-        <td>Raincin</td>
-        <td>China</td>
-    </tr>
-    <tr class="pagination-row">
-        <td>Eloise</td>
-        <td>Jimpson</td>
-        <td>Greece</td>
-    </tr>
-    <tr class="pagination-row">
-        <td>Marianna</td>
-        <td>Champkins</td>
-        <td>Paraguay</td>
-    </tr>
-    <tr class="pagination-row">
-        <td>Ralph</td>
-        <td>Mounsie</td>
-        <td>Uruguay</td>
-    </tr>
-    <tr class="pagination-row">
-        <td>Tobey</td>
-        <td>Doge</td>
-        <td>Guatemala</td>
-    </tr>
-    <tr class="pagination-row">
-        <td>Kristel</td>
-        <td>I'anson</td>
-        <td>Sweden</td>
-    </tr>
-    <tr class="pagination-row">
-        <td>Daune</td>
-        <td>Housecraft</td>
-        <td>Indonesia</td>
-    </tr>
-    </tbody>
-    <tfoot>
-    <tr>
-        <th colspan="3">
-            <div id="pagination-navigation">
-            </div>
-        </th>
-    </tr>
-    </tfoot>
-</table>
+<section>
+    <table id="myTable">
+        <thead>
+        <tr>
+            <th>Firstname</th>
+            <th>Lastname</th>
+            <th>Country</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Alfreds</td>
+            <td>Futterkiste</td>
+            <td>Germany</td>
+        </tr>
+        <tr>
+            <td>Maria</td>
+            <td>Anders</td>
+            <td>Mexico</td>
+        </tr>
+        <tr>
+            <td>Talbert</td>
+            <td>Chaudron</td>
+            <td>Nigeria</td>
+        </tr>
+        <tr>
+            <td>Bran</td>
+            <td>Raincin</td>
+            <td>China</td>
+        </tr>
+        <tr>
+            <td>Eloise</td>
+            <td>Jimpson</td>
+            <td>Greece</td>
+        </tr>
+        <tr>
+            <td>Marianna</td>
+            <td>Champkins</td>
+            <td>Paraguay</td>
+        </tr>
+        <tr>
+            <td>Ralph</td>
+            <td>Mounsie</td>
+            <td>Uruguay</td>
+        </tr>
+        <tr>
+            <td>Tobey</td>
+            <td>Doge</td>
+            <td>Guatemala</td>
+        </tr>
+        <tr>
+            <td>Kristel</td>
+            <td>I'anson</td>
+            <td>Sweden</td>
+        </tr>
+        <tr>
+            <td>Daune</td>
+            <td>Housecraft</td>
+            <td>Indonesia</td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <th colspan="3">
+                <div id="pagination-navigation">
+                </div>
+            </th>
+        </tr>
+        </tfoot>
+    </table>
+</section>
+<section>
+    <table id="second-table">
+        <thead>
+        <tr>
+            <th>Firstname</th>
+            <th>Lastname</th>
+            <th>Country</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Alfreds</td>
+            <td>Futterkiste</td>
+            <td>Germany</td>
+        </tr>
+        <tr>
+            <td>Maria</td>
+            <td>Anders</td>
+            <td>Mexico</td>
+        </tr>
+        <tr>
+            <td>Talbert</td>
+            <td>Chaudron</td>
+            <td>Nigeria</td>
+        </tr>
+        <tr>
+            <td>Bran</td>
+            <td>Raincin</td>
+            <td>China</td>
+        </tr>
+        <tr>
+            <td>Eloise</td>
+            <td>Jimpson</td>
+            <td>Greece</td>
+        </tr>
+        <tr>
+            <td>Marianna</td>
+            <td>Champkins</td>
+            <td>Paraguay</td>
+        </tr>
+        <tr>
+            <td>Ralph</td>
+            <td>Mounsie</td>
+            <td>Uruguay</td>
+        </tr>
+        <tr>
+            <td>Tobey</td>
+            <td>Doge</td>
+            <td>Guatemala</td>
+        </tr>
+        <tr>
+            <td>Kristel</td>
+            <td>I'anson</td>
+            <td>Sweden</td>
+        </tr>
+        <tr>
+            <td>Daune</td>
+            <td>Housecraft</td>
+            <td>Indonesia</td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <th colspan="3">
+                <div id="navigation">
+                </div>
+            </th>
+        </tr>
+        </tfoot>
+    </table>
+</section>
 <script type="text/javascript" src="tablePagination.js"></script>
+<script>
+    paginateTable(
+    "myTable",
+    "pagination-navigation",
+    [2, 5, 10, 15, 20, 25, 30]
+);
+
+    paginateTable(
+        "second-table",
+        "navigation",
+        [5, 10, 15, 20, 25, 30]
+    );
+</script>
 </body>
 </html>

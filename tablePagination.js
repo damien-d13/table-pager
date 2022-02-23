@@ -1,12 +1,19 @@
 
 function paginateTable(tableId, navId, rowCountPerPageArray) {
 
-    // element that contains the selectList and page buttons
-    let navigation = document.getElementById(navId);
+
+    // element that contains the selectList and page buttons and table node to page
+    let navigation = null;
+    let table = null;
+    try{
+        navigation = document.getElementById(navId);
     // console.log(navigation);
-    
-    // table node to page
-    let table = document.getElementById(tableId);
+
+        table = document.getElementById(tableId);
+    } catch (error) {
+        console.error(error);
+        return;
+    }
     let tableBody = table.getElementsByTagName('tbody')[0];
     // console.log(table);
 
@@ -101,8 +108,3 @@ function paginateTable(tableId, navId, rowCountPerPageArray) {
     hideRows();
 }
 
-paginateTable(
-    "myTable", 
-    "pagination-navigation", 
-    [2, 5, 10, 15, 20, 25, 30]
-);
